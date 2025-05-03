@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const DiabetopediaContent = () => {
   const [name, setName] = useState("");
@@ -7,6 +8,8 @@ const DiabetopediaContent = () => {
   const [weight, setWeight] = useState("");
   const [bmi, setBmi] = useState("");
 
+  const navigate = useNavigate();
+
   // BMI Calculation
   const calculateBMI = () => {
     if (height && weight) {
@@ -14,6 +17,12 @@ const DiabetopediaContent = () => {
       const bmiValue = (weight / (heightMeters * heightMeters)).toFixed(2);
       setBmi(bmiValue);
     }
+  };
+
+  const goToBooklet = () => {
+    navigate("/booklet", {
+      state: { name, age, height, weight, bmi },
+    });
   };
 
   return (
@@ -69,10 +78,19 @@ const DiabetopediaContent = () => {
             >
               Calculate BMI
             </button>
+
             {bmi && (
-              <p className="text-lg text-gray-800 mt-2 text-center">
-                Your BMI: <span className="font-bold">{bmi}</span>
-              </p>
+              <>
+                <p className="text-lg text-gray-800 mt-2 text-center">
+                  Your BMI: <span className="font-bold">{bmi}</span>
+                </p>
+                <button
+                  onClick={goToBooklet}
+                  className="w-full bg-green-500 text-white py-3 rounded-md mt-4 hover:bg-green-600 transition duration-200"
+                >
+                  Grab your Diet
+                </button>
+              </>
             )}
           </div>
         </section>
@@ -97,8 +115,12 @@ const DiabetopediaContent = () => {
               key={index}
               className="bg-white p-5 rounded-lg shadow-md text-center hover:shadow-lg transition duration-300"
             >
-              <h4 className="text-lg sm:text-xl font-semibold text-pink-700">{cat.title}</h4>
-              <p className="mt-2 text-sm sm:text-base text-gray-700">{cat.items}</p>
+              <h4 className="text-lg sm:text-xl font-semibold text-pink-700">
+                {cat.title}
+              </h4>
+              <p className="mt-2 text-sm sm:text-base text-gray-700">
+                {cat.items}
+              </p>
             </div>
           ))}
         </section>
