@@ -1,32 +1,34 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
+import logo from './logo.jpeg'; 
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <header className="bg-pink-200 p-4 shadow-lg">
+    <header className="bg-pink-200 py-4 shadow-lg">
       <div className="container mx-auto flex justify-between items-center">
-        <div className="flex items-center space-x-2">
-          <img src="/logo.png" alt="Diabetopedia Logo" className="h-10 w-10 rounded-full" />
+        {/* Logo and Title */}
+        <div className="flex items-center space-x-3">
+          <img src={logo} alt="Diabetopedia Logo" className="h-12 w-12 rounded-full object-cover" />
           <h1 className="text-2xl md:text-3xl font-extrabold italic font-serif text-gray-800">
             Diabetopedia
           </h1>
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-4">
+        <nav className="hidden md:flex space-x-4 items-center">
           <Link to="/" className="bg-pink-400 px-4 py-2 rounded-full text-white hover:bg-pink-500">
             Home
           </Link>
-          <Link to="/about" className="bg-pink-400 px-4 py-2 rounded-full text-white hover:bg-pink-500">
-            About
+          <Link to="/categories" className="bg-pink-400 px-4 py-2 rounded-full text-white hover:bg-pink-500">
+            Categories
           </Link>
         </nav>
 
         {/* Mobile Menu Button */}
-        <button className="md:hidden" onClick={() => setIsOpen(!isOpen)}>
+        <button className="md:hidden flex items-center" onClick={() => setIsOpen(!isOpen)}>
           {isOpen ? <X size={28} /> : <Menu size={28} />}
         </button>
       </div>

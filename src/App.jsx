@@ -4,6 +4,7 @@ import Footer from "./components/Footer";
 import Welcome from "./pages/Welcome";
 import FoodCategoriesPage from "./pages/FoodCategoriesPage";
 import BookletPage from "./pages/BookletPage";
+import RecommendedCategories from "./pages/RecommendedCategories";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/" element={<Welcome />} />
           <Route path="/categories" element={<FoodCategoriesPage />} />
           <Route path="/booklet" element={<BookletPage />} />
+          <Route path="/recommendedCategories" element={<RecommendedCategories />} />
         </Routes>
       </main>
 
