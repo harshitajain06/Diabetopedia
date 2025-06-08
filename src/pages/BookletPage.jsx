@@ -17,7 +17,7 @@ const BookletPage = () => {
   const getBMICategory = () => {
     const numericBMI = parseFloat(bmi);
     if (numericBMI < 18.5) return "underweight";
-    if (numericBMI >= 18.5 && numericBMI <= 24.9) return "normal";
+    if (numericBMI >= 18.5 && numericBMI <= 24.9) return "normalweight";
     if (numericBMI >= 25 && numericBMI <= 29.9) return "overweight";
     if (numericBMI >= 30 && numericBMI <= 100) return "obese";
     return "invalid";
