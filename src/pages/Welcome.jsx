@@ -51,11 +51,11 @@ const DiabetopediaContent = () => {
   };
 
   return (
-    <div className="bg-pink-50 min-h-screen text-gray-900 flex flex-col">
+    <div className="bg-blue-50 min-h-screen text-gray-900 flex flex-col">
       <main className="container mx-auto px-4 py-8 flex flex-col lg:flex-row items-start gap-10">
         {/* Left Section */}
         <section className="flex-1 bg-white p-6 rounded-lg shadow-md">
-          <h2 className="text-3xl font-bold text-pink-700 mb-4">
+          <h2 className="text-3xl font-bold text-white-700 mb-4">
   Welcome to <span className="text-green-600">Diabetopedia</span>! 🌿
 </h2>
 <p className="text-gray-700 text-base sm:text-lg leading-relaxed">
@@ -139,7 +139,7 @@ const DiabetopediaContent = () => {
             </select>
 
             {activity && (
-              <div className="bg-pink-100 border-l-4 border-pink-400 p-3 rounded-md mt-2 text-sm text-gray-800">
+              <div className="bg-white-100 border-l-4 border-blue-400 p-3 rounded-md mt-2 text-sm text-gray-800">
                 <p className="font-semibold">{activityDescriptions[activity]?.title}</p>
                 <p>{activityDescriptions[activity]?.description}</p>
               </div>
@@ -147,7 +147,7 @@ const DiabetopediaContent = () => {
 
             <button
               onClick={calculateBMI}
-              className="w-full bg-pink-500 text-white py-3 rounded-md hover:bg-pink-600"
+              className="w-full bg-blue-500 text-white py-3 rounded-md hover:bg-white-600"
             >
               Calculate BMI
             </button>
