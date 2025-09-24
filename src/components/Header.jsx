@@ -25,6 +25,15 @@ const Header = () => {
           <Link to="/categories" className="bg-blue-400 px-4 py-2 rounded-full text-white hover:bg-white-500">
             Categories
           </Link>
+          <a
+            href="https://diabetopedia-app.vercel.app/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="bg-gradient-to-r from-green-500 to-blue-500 hover:from-green-600 hover:to-blue-600 px-4 py-2 rounded-full text-white font-semibold hover:shadow-lg transform hover:scale-105 transition-all duration-300 flex items-center space-x-1"
+          >
+            <span>🚀</span>
+            <span>My App</span>
+          </a>
         </nav>
 
         {/* Mobile Menu Button */}
@@ -43,9 +52,20 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link to="/about" className="block text-gray-900 hover:bg-blue-500 px-4 py-2 rounded-md">
-                About
+              <Link to="/categories" className="block text-gray-900 hover:bg-blue-500 px-4 py-2 rounded-md">
+                Categories
               </Link>
+            </li>
+            <li>
+              <a
+                href="https://diabetopedia-app.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center space-x-2 text-gray-900 hover:bg-green-500 px-4 py-2 rounded-md font-semibold"
+              >
+                <span>🚀</span>
+                <span>My App</span>
+              </a>
             </li>
           </ul>
         </nav>
