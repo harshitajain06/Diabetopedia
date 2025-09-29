@@ -1,7 +1,23 @@
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
 const Footer = () => {
-  return (
+  const [visitorCount, setVisitorCount] = useState(0);
+
+  useEffect(() => {
+    // Get current visitor count from localStorage
+    const currentCount = localStorage.getItem('diabetopedia-visitor-count');
+    const count = currentCount ? parseInt(currentCount) : 0;
+    
+    // Increment the count
+    const newCount = count + 1;
+    
+    // Update localStorage and state
+    localStorage.setItem('diabetopedia-visitor-count', newCount.toString());
+    setVisitorCount(newCount);
+  }, []);
+
+    return (
     <footer className="bg-gradient-to-r from-blue-600 to-green-600 text-white mt-16">
       <div className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -14,6 +30,14 @@ const Footer = () => {
               Your comprehensive diabetes management companion. Get personalized diet plans, 
               track your health metrics, and access expert guidance for better diabetes control.
             </p>
+            
+            {/* Visitor Counter */}
+            <div className="bg-white bg-opacity-20 rounded-lg p-4 text-center">
+              <div className="text-lg font-bold text-gray-800">
+                {visitorCount.toLocaleString()} Total Visitors
+              </div>
+            </div>
+            
             <div className="flex space-x-4">
               <a 
                 href="https://diabetopedia-app.vercel.app/" 
@@ -145,8 +169,8 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
-};
-
-export default Footer;
+      </footer>
+    );
+  };
+  
+  export default Footer;
