@@ -5,12 +5,11 @@ const Footer = () => {
   const [visitorCount, setVisitorCount] = useState(0);
 
   useEffect(() => {
-    // Get current visitor count from localStorage
-    const currentCount = localStorage.getItem('diabetopedia-visitor-count');
-    const count = currentCount ? parseInt(currentCount) : 0;
+    // Clear existing count and start fresh from 428
+    localStorage.removeItem('diabetopedia-visitor-count');
     
-    // Increment the count
-    const newCount = count + 1;
+    // Start from 428 and increment
+    const newCount = 428 + 1;
     
     // Update localStorage and state
     localStorage.setItem('diabetopedia-visitor-count', newCount.toString());
