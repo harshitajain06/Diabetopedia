@@ -1,26 +1,62 @@
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { incrementVisitorCount, subscribeToVisitorCount } from "../firebase/visitorService";
 
 const Footer = () => {
   const [visitorCount, setVisitorCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    // Get existing count from localStorage or start from 428
-    const existingCount = localStorage.getItem('diabetopedia-visitor-count');
-    const baseCount = 428;
-    
-    let newCount;
-    if (existingCount) {
-      // Increment existing count
-      newCount = parseInt(existingCount) + 1;
-    } else {
-      // First visit - start from base count + 1
-      newCount = baseCount + 1;
-    }
-    
-    // Update localStorage and state
-    localStorage.setItem('diabetopedia-visitor-count', newCount.toString());
-    setVisitorCount(newCount);
+    let unsubscribe;
+
+    const initializeVisitorCount = async () => {
+      try {
+        setIsLoading(true);
+        
+        // Check if this is a new session (not a page refresh)
+        const sessionKey = 'diabetopedia-session';
+        const hasVisitedThisSession = sessionStorage.getItem(sessionKey);
+        
+        if (!hasVisitedThisSession) {
+          // This is a new session, increment the global count
+          const newCount = await incrementVisitorCount();
+          setVisitorCount(newCount);
+          
+          // Mark this session as visited
+          sessionStorage.setItem(sessionKey, 'true');
+        } else {
+          // This is a page refresh, just get the current count
+          const { getVisitorCount } = await import("../firebase/visitorService");
+          const currentCount = await getVisitorCount();
+          setVisitorCount(currentCount);
+        }
+        
+        // Subscribe to real-time updates
+        unsubscribe = subscribeToVisitorCount((count) => {
+          setVisitorCount(count);
+        });
+        
+      } catch (error) {
+        console.error('Error initializing visitor count:', error);
+        // Fallback to localStorage if Firebase fails
+        const existingCount = localStorage.getItem('diabetopedia-visitor-count');
+        const baseCount = 428;
+        const fallbackCount = existingCount ? parseInt(existingCount) + 1 : baseCount + 1;
+        localStorage.setItem('diabetopedia-visitor-count', fallbackCount.toString());
+        setVisitorCount(fallbackCount);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    initializeVisitorCount();
+
+    // Cleanup subscription on unmount
+    return () => {
+      if (unsubscribe) {
+        unsubscribe();
+      }
+    };
   }, []);
 
     return (
@@ -40,7 +76,14 @@ const Footer = () => {
             {/* Visitor Counter */}
             <div className="bg-white bg-opacity-20 rounded-lg p-4 text-center">
               <div className="text-lg font-bold text-gray-800">
-                {visitorCount.toLocaleString()} Total Visitors
+                {isLoading ? (
+                  <div className="flex items-center justify-center space-x-2">
+                    <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-gray-800"></div>
+                    <span>Loading...</span>
+                  </div>
+                ) : (
+                  `${visitorCount.toLocaleString()} Total Visitors`
+                )}
               </div>
             </div>
             
